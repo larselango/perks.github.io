@@ -1,3 +1,4 @@
+# Bygger siden og publiserer den til GitHub Pages automatisk
 # hver gang du laster opp endringer (push) til main-grenen.
 # Du trenger ikke gjøre noe lokalt – GitHub gjør jobben.
 name: Bygg og publiser perks
