@@ -3,7 +3,7 @@
 Uavhengig oversikt over norske medlemsfordeler. Mobil-først, bygget med React + Vite,
 hostet gratis på GitHub Pages med eget domene via Cloudflare.
 
-## Kom i gang (for utvikling på egen maskin – valgfritt)
+## Kom i gang (for utvikling på egen maskin – valgfritt) 
 
 ```bash
 npm install     # last ned avhengigheter (én gang)
