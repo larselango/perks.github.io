@@ -444,7 +444,7 @@ export default function Perks() {
               ) : (
                 <>
                   <div style={{ fontSize: 13.5, opacity: 0.85, marginBottom: 10, lineHeight: 1.4 }}>
-                    Vil du vite når det lønner seg å bruke fordelene dine? Få tips når de er mest aktuelle – vi lover å ikke sende for mange e-poster.
+                    Få tips når fordelene dine er mest aktuelle – vi lover å ikke sende for mye.
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     <div style={{ position: "relative", flex: "1 1 150px" }}>
