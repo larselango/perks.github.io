@@ -241,10 +241,10 @@ export const CATALOG = [
   {
     id: "tekna", name: "Tekna", short: "Tekna", sub: "Teknisk-naturvitenskapelig forening", color: "#6A3FA0", cost: 0, url: "https://www.tekna.no/medlemsfordeler/",
     benefits: [
-      { merchant: "Gjensidige – Bilforsikring", note: "Bil Kasko med veihjelp, god leiebilordning og kundeutbytte", cats: ["bank"], kw: ["bilforsikring","forsikring","kasko","veihjelp","gjensidige"] },
-      { merchant: "Gjensidige – Reiseforsikring", note: "reiseforsikring som gjelder uansett reisemål", cats: ["bank"], kw: ["reiseforsikring","forsikring","reise","gjensidige"] },
-      { merchant: "Gjensidige – Innboforsikring", note: "innboforsikring (identisk med Gjensidige Innbo Pluss)", cats: ["bank"], kw: ["innboforsikring","forsikring","innbo","gjensidige"] },
-      { merchant: "Gjensidige – Personforsikring", note: "rabatt på familieulykke-, livs- og uføreforsikring", cats: ["bank"], kw: ["personforsikring","livsforsikring","uføre","familieulykke","gjensidige"] },
+      { merchant: "Bilforsikring", note: "Bil Kasko med veihjelp og leiebilordning (Gjensidige)", cats: ["bank"], kw: ["bilforsikring","forsikring","kasko","veihjelp","gjensidige"] },
+      { merchant: "Reiseforsikring", note: "reiseforsikring som gjelder uansett reisemål (Gjensidige)", cats: ["bank"], kw: ["reiseforsikring","forsikring","reise","gjensidige"] },
+      { merchant: "Innboforsikring", note: "innboforsikring (Gjensidige – identisk med Innbo Pluss)", cats: ["bank"], kw: ["innboforsikring","forsikring","innbo","gjensidige"] },
+      { merchant: "Personforsikring", note: "rabatt på familieulykke-, livs- og uføreforsikring (Gjensidige)", cats: ["bank"], kw: ["personforsikring","livsforsikring","uføre","familieulykke","gjensidige"] },
       { merchant: "Kron", note: "medlemspriser på fond og pensjon", cats: ["bank"], kw: ["fond","pensjon","sparing","investering","kron"] },
       { merchant: "BMW", note: "4 % på elbil, 8 % på øvrige modeller (kjøp og leasing)", cats: ["bil"], kw: ["bil","elbil","bmw","leasing"] },
       { merchant: "Xpeng og Bilia", note: "medlemsfordel på kjøp/leasing av ny bil + service", cats: ["bil"], kw: ["bil","elbil","xpeng","bilia","leasing","service"] },
@@ -428,7 +428,7 @@ export const CATALOG = [
       { merchant: "Juristforbundet Forsikring", note: "gunstige forsikrings-, bank- og pensjonsprodukter (Handelsbanken)", cats: ["bank"], kw: ["forsikring","bank","pensjon","handelsbanken"] },
       { merchant: "Skadeforsikring", note: "skadeforsikringer via Landkreditt Forsikring", cats: ["bank"], kw: ["skadeforsikring","forsikring","landkreditt","hus","innbo","bil"] },
       { merchant: "Personforsikring", note: "personforsikringer via Euro Accident", cats: ["bank"], kw: ["personforsikring","forsikring","liv","uføre","euro accident"] },
-      { merchant: "Gouda Reiseforsikring", note: "reiseforsikring via Gjensidige (Gouda)", cats: ["bank"], kw: ["reiseforsikring","forsikring","gouda","gjensidige","reise"] },
+      { merchant: "Gouda Reiseforsikring", note: "reiseforsikring (Gjensidige)", cats: ["bank"], kw: ["reiseforsikring","forsikring","gouda","gjensidige","reise"] },
       { merchant: "Barneforsikring", note: "barneforsikring via Norsk Forsikring", cats: ["bank"], kw: ["barneforsikring","forsikring","barn","norsk forsikring"] },
     ],
   },
