@@ -253,7 +253,7 @@ export default function Perks() {
     if (SITE.emailoctopusFormAction) {
       try {
         const body = new URLSearchParams();
-        body.append("email_address", e);
+        body.append("field_0", e);
         await fetch(SITE.emailoctopusFormAction, { method: "POST", mode: "no-cors", body });
       } catch {}
     }
