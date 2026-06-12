@@ -897,18 +897,18 @@ export const AUTO_VALUE = {
 };
 
 /* ---------- AKTUELT-stripa – artikler. icon = navn som tekst (se lista i icons.js) ---------- */
-export const ARTICLES = [
+/*export const ARTICLES = [
   { tag: "Reise", title: "Reiseforsikring på kredittkortet: hva dekker det – og hva gjør det ikke?", url: "#", current: true, color: "#5a8def", icon: "Plane" },
   { tag: "Sommer", title: "Sommerrabattene medlemskapet ditt allerede gir deg", url: "#", color: "#d76e98", icon: "Sun" },
   { tag: "Bil", title: "Vinterdekk: slik får du medlemsrabatt på skift og dekkhotell", url: "#", color: "#2f8f7a", icon: "Snowflake" },
-];
+];*/
 
 /* ---------- GUIDER – «kommer snart»-kort nederst ---------- */
-export const GUIDES = [
+/* export const GUIDES = [
   { title: "Er LO-medlemskap verdt det?", tint: "#d9e3d2" },
   { title: "Kredittkortfordeler forklart", tint: "#e3dcc8" },
   { title: "Slik stabler du flere medlemsrabatter", tint: "#d6dfe7" },
-];
+];*/
 /* Tidsriktige artikler. Hver peker til sin EGEN landingsside (egen URL) – sett
    inn ekte lenker når sidene finnes. «current: true» = den som vises i den smale
    aktuelt-stripa øverst akkurat nå; bytt etter sesong (reise om våren, dekk om
