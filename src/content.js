@@ -898,9 +898,11 @@ export const AUTO_VALUE = {
 
 /* ---------- AKTUELT-stripa – artikler. icon = navn som tekst (se lista i icons.js) ---------- */
 export const ARTICLES = [
-  { tag: "Reise", title: "Reiseforsikring på kredittkortet: hva dekker det – og hva gjør det ikke?", url: "#", current: true, color: "#5a8def", icon: "Plane" },
-  { tag: "Sommer", title: "Sommerrabattene medlemskapet ditt allerede gir deg", url: "#", color: "#d76e98", icon: "Sun" },
-  { tag: "Bil", title: "Vinterdekk: slik får du medlemsrabatt på skift og dekkhotell", url: "#", color: "#2f8f7a", icon: "Snowflake" },
+  // Skjult for nå – området vises ikke når lista er tom. Behold artiklene under
+  // (eller legg til nye med ekte url) for å ta «Aktuelt nå»-stripa i bruk igjen.
+  // { tag: "Reise", title: "Reiseforsikring på kredittkortet: hva dekker det – og hva gjør det ikke?", url: "#", current: true, color: "#5a8def", icon: "Plane" },
+  // { tag: "Sommer", title: "Sommerrabattene medlemskapet ditt allerede gir deg", url: "#", color: "#d76e98", icon: "Sun" },
+  // { tag: "Bil", title: "Vinterdekk: slik får du medlemsrabatt på skift og dekkhotell", url: "#", color: "#2f8f7a", icon: "Snowflake" },
 ];
 
 /* ---------- GUIDER – «kommer snart»-kort nederst ---------- */

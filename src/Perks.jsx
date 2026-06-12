@@ -521,7 +521,9 @@ export default function Perks() {
           </div>
         )}
 
-        {/* Aktuelt – tidsriktige artikler som visuelt blikkfang (erstatter «Populære») */}
+        {/* Aktuelt – tidsriktige artikler som visuelt blikkfang (erstatter «Populære»).
+            Skjules automatisk når ARTICLES er tom (se src/content.js). */}
+        {ARTICLES.length > 0 && (
         <div style={{ marginBottom: 18 }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10 }}>
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase", opacity: 0.5 }}>Aktuelt nå</div>
@@ -547,6 +549,7 @@ export default function Perks() {
             })}
           </div>
         </div>
+        )}
 
         {/* Kompakte kontroller – dominerer ikke skjermen */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 12 }}>
