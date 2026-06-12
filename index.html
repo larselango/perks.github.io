@@ -61,15 +61,24 @@
     <!-- React monteres her. Innholdet under vises for søkemotorer og hvis
          JavaScript er av; det byttes ut med appen så snart den laster. -->
     <div id="root">
-      <main style="max-width:600px;margin:0 auto;padding:48px 16px;font-family:system-ui,sans-serif;color:#0d0c22">
-        <h1 style="font-size:28px;line-height:1.15">Finn medlemsfordelene du allerede har – og se hva de er verdt</h1>
-        <p style="font-size:16px;opacity:.75">
-          perks er en uavhengig oversikt over norske medlemsfordeler. Velg medlemskapene og
-          fordelsprogrammene dine – som LO, OBOS, NAF, Unio, Coop og Trumf – og se samlet hvilke
-          rabatter og fordeler du faktisk har tilgang til.
-        </p>
-        <p style="font-size:14px;opacity:.6">Laster oversikten … (krever JavaScript)</p>
-      </main>
+      <!-- Rolig lasteskjerm i samme farge som appen, så overgangen blir sømløs. -->
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f4f4f6;color:#0d0c22;font-family:system-ui,sans-serif">
+        <div style="font-size:34px;font-weight:700;letter-spacing:-0.5px">perks<span style="color:#d76e98">.</span></div>
+      </div>
+
+      <!-- Tekst for søkemotorer og delings-forhåndsvisninger (lest av roboter, skjult for øyet). -->
+      <div style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">
+        <h1>Finn medlemsfordelene du allerede har – og se hva de er verdt</h1>
+        <p>perks er en uavhengig oversikt over norske medlemsfordeler. Velg medlemskapene og fordelsprogrammene dine – som LO, OBOS, NAF, Unio, Coop og Trumf – og se samlet hvilke rabatter og fordeler du faktisk har tilgang til.</p>
+      </div>
+
+      <!-- For de få uten JavaScript: en ekte beskjed. -->
+      <noscript>
+        <div style="max-width:600px;margin:0 auto;padding:48px 16px;font-family:system-ui,sans-serif;color:#0d0c22">
+          <h2 style="font-size:24px;line-height:1.15">perks – finn medlemsfordelene du allerede har</h2>
+          <p style="font-size:16px;opacity:.75">Denne oversikten krever JavaScript. Skru det på for å se medlemsfordelene dine.</p>
+        </div>
+      </noscript>
     </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
