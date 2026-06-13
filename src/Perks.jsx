@@ -185,19 +185,22 @@ export default function Perks() {
       try {
         const res = await storage.get(SEL_KEY);
         const ids = res && res.value ? JSON.parse(res.value) : null;
-        const use = ids && ids.length ? ids : ALL_IDS; // forsiden viser alt som standard
+        // Standard = ingenting valgt (= vis alle). Gammelt lagret «alt valgt» tolkes også som vis alle.
+        let use = ids && ids.length && ids.length < ALL_IDS.length ? ids : [];
         setSelected(use); setDraft(use);
-      } catch { setSelected(ALL_IDS); setDraft(ALL_IDS); }
+      } catch { setSelected([]); setDraft([]); }
     })();
   }, []);
 
   const saveSelection = async (ids) => {
-    setSelected(ids); setDraft(ids); setPicking(false); setActiveCat("alle"); setQuery("");
-    try { await storage.set(SEL_KEY, JSON.stringify(ids)); } catch {}
+    const norm = ids.length >= ALL_IDS.length ? [] : ids; // alle valgt = vis alt = tomt utvalg
+    setSelected(norm); setDraft(norm); setPicking(false); setActiveCat("alle"); setQuery("");
+    try { await storage.set(SEL_KEY, JSON.stringify(norm)); } catch {}
   };
 
   const selMemberships = useMemo(() => {
     if (!selected) return [];
+    if (selected.length === 0) return [...CATALOG].sort(byRank); // tomt utvalg = vis alle medlemskap
     const ids = new Set(selected);
     for (const id of selected) {
       const m = CATALOG.find((x) => x.id === id);
@@ -339,7 +342,7 @@ export default function Perks() {
         </div>
         <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "linear-gradient(transparent, " + paper + " 32%)", padding: "26px 16px 18px" }}>
           <div style={wrap}>
-            <button onClick={() => saveSelection(draft.length ? draft : ALL_IDS)} className="btn-pink"
+            <button onClick={() => saveSelection(draft)} className="btn-pink"
               style={{ width: "100%", background: accent, color: "#fff", border: "none", borderRadius: 10, padding: "16px", fontSize: 16, fontWeight: 600, cursor: "pointer", fontFamily: sans }}>
               {draft.length ? `Vis fordelene mine (${draft.length})` : "Vis alle medlemskap"}
             </button>
@@ -350,7 +353,7 @@ export default function Perks() {
   }
 
   /* ---------- Forside ---------- */
-  const showAll = selected.length === ALL_IDS.length;
+  const showAll = selected.length === 0;
   const showGrouped = activeCat === "alle" && !query.trim();
 
   const Row = ({ m, b, badge }) => {
@@ -424,7 +427,7 @@ export default function Perks() {
                 style={{ borderRadius: 8, padding: "9px 15px", fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer", border: "none", background: accent, color: "#fff" }}>
                 Endre medlemskap
               </button>
-              <button onClick={() => saveSelection(ALL_IDS)}
+              <button onClick={() => saveSelection([])}
                 style={{ border: "none", background: "none", color: "#fff", opacity: 0.7, fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer", textDecoration: "underline", padding: 0 }}>
                 Vis alle
               </button>
@@ -560,7 +563,7 @@ export default function Perks() {
             {showAll ? "Velg medlemskap" : "Endre medlemskap"}
           </button>
           {!showAll && (
-            <button onClick={() => saveSelection(ALL_IDS)}
+            <button onClick={() => saveSelection([])}
               style={{ border: "none", background: "none", color: ink, opacity: 0.7, fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer", textDecoration: "underline", padding: 0 }}>
               Vis alle
             </button>
