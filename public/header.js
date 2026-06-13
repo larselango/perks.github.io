@@ -40,14 +40,14 @@
     style.textContent =
       "#site-header{position:sticky;top:0;z-index:30}" +
       ".ph-bar{background:" + SURFACE + ";border-bottom:1px solid rgba(0,0,0,0.12)}" +
-      ".ph-inner{box-sizing:content-box;max-width:600px;margin:0 auto;padding:13px 16px;display:flex;align-items:center;justify-content:space-between}" +
+      ".ph-inner{box-sizing:content-box;max-width:720px;margin:0 auto;padding:13px 16px;display:flex;align-items:center;justify-content:space-between}" +
       ".ph-logo{font-family:'Kaushan Script',cursive;font-size:30px;font-weight:400;line-height:1.1;color:" + INK + ";text-decoration:none}" +
       ".ph-logo span{color:" + ACCENT + "}" +
       ".ph-burger{border:none;background:none;cursor:pointer;padding:8px;margin-right:-8px;display:flex;flex-direction:column;gap:5px}" +
       ".ph-burger span{display:block;width:23px;height:2px;background:" + INK + ";border-radius:2px}" +
       ".ph-menu{display:none;background:" + SURFACE + "}" +
       ".ph-menu.open{display:block}" +
-      ".ph-menu-inner{max-width:600px;margin:0 auto;padding:4px 16px 10px}" +
+      ".ph-menu-inner{max-width:720px;margin:0 auto;padding:4px 16px 10px}" +
       ".ph-item{width:100%;box-sizing:border-box;text-align:left;border:none;background:none;cursor:pointer;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:15.5px;font-weight:500;color:" + INK + ";padding:13px 2px;display:flex;justify-content:space-between;align-items:center;text-decoration:none}" +
       ".ph-menu-inner > .ph-item + .ph-item{border-top:1px solid rgba(0,0,0,0.06)}" +
       ".ph-item-soon{cursor:default}" +

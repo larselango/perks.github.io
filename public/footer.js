@@ -32,7 +32,7 @@
     var style = document.createElement("style");
     style.id = "pf-styles";
     style.textContent =
-      "#site-footer .pf-inner{box-sizing:content-box;max-width:600px;margin:0 auto;padding:20px 16px 44px;border-top:1px solid rgba(0,0,0,0.10);font-family:" + SANS + ";font-size:12.5px;line-height:1.65}" +
+      "#site-footer .pf-inner{box-sizing:content-box;max-width:720px;margin:0 auto;padding:20px 16px 44px;border-top:1px solid rgba(0,0,0,0.10);font-family:" + SANS + ";font-size:12.5px;line-height:1.65}" +
       ".pf-card{background:" + SURFACE + ";border:1px solid rgba(0,0,0,0.09);border-radius:13px;padding:16px;margin-bottom:18px}" +
       ".pf-card-title{font-family:" + SERIF + ";font-size:16px;font-weight:600;color:" + INK + "}" +
       ".pf-card-text{margin:5px 0 11px;color:" + INK + ";opacity:0.72;line-height:1.5}" +

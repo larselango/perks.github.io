@@ -266,7 +266,7 @@ export default function Perks() {
 
   /* styling – farger/fonter kommer fra theme.js */
   const serif = fonts.serif, sans = fonts.sans;
-  const wrap = { maxWidth: 600, margin: "0 auto", padding: "0 16px" };
+  const wrap = { maxWidth: 720, margin: "0 auto", padding: "0 16px" };
 
   // Lar den felles headeren (public/header.js) styre forsidens navigasjon
   useEffect(() => {
