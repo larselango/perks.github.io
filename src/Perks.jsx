@@ -452,7 +452,7 @@ export default function Perks() {
         {/* Toppen: lys hero ved «vis alle», svart verdikort så snart noe er valgt
            (uansett meny). Drives synkront av utvalget = rask oppdatering. */}
         {!showAll ? (
-          <div style={{ borderRadius: 16, padding: "20px", marginBottom: 18, background: ink, color: "#fff" }}>
+          <div style={{ borderRadius: 14, padding: "15px 18px", marginBottom: 14, background: ink, color: "#fff" }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", opacity: 0.55, marginBottom: 8 }}>Din fordelsverdi</div>
             {valueEst.auto > 0 ? (
               <>
@@ -473,36 +473,12 @@ export default function Perks() {
                 </div>
               </>
             )}
-            <div style={{ fontSize: 11, opacity: 0.5, marginTop: 8, lineHeight: 1.4 }}>
-              Anslag – faktisk verdi avhenger av din situasjon og hvor mye du bruker fordelene.
-            </div>
-            {/* Kontroller på kortet – fylt rosa knapp, «Vis alle» i lys tekst pga. mørk bakgrunn */}
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 14 }}>
-              <button onClick={() => { setDraft(selected); setPicking(true); }} className="btn-pink"
-                style={{ borderRadius: 8, padding: "9px 15px", fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer", border: "none", background: accent, color: "#fff" }}>
-                Endre medlemskap
-              </button>
-              <button onClick={() => saveSelection([])}
-                style={{ border: "none", background: "none", color: "#fff", opacity: 0.7, fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer", textDecoration: "underline", padding: 0 }}>
-                Vis alle
-              </button>
-            </div>
           </div>
         ) : (
-          <div style={{ borderRadius: 16, padding: "22px 20px", marginBottom: 18, background: surface, border: "1px solid rgba(0,0,0,0.09)", borderLeft: `4px solid ${accent}`, position: "relative", overflow: "hidden" }}>
-            <div aria-hidden="true" style={{ position: "absolute", right: -24, top: -16, transform: "rotate(-12deg)", opacity: 0.06, color: accent, pointerEvents: "none" }}>
-              {React.createElement(Tag, { size: 150, strokeWidth: 1.4 })}
-            </div>
-            <div style={{ position: "relative" }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 8 }}>Få oversikt</div>
-              <h1 style={{ fontSize: 22, fontFamily: serif, fontWeight: 600, lineHeight: 1.12, margin: 0, letterSpacing: -0.2, maxWidth: 430 }}>Se fordelene du allerede har</h1>
-              <p style={{ fontSize: 13, opacity: 0.7, margin: "9px 0 14px", maxWidth: 400, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og viser {"hvor du faktisk får rabatt."}</p>
-              <button onClick={() => { setDraft(selected); setPicking(true); }} className="btn-pink"
-                style={{ border: `1.5px solid ${accent}`, background: "transparent", color: accent, borderRadius: 8, padding: "10px 18px", fontSize: 14.5, fontWeight: 700, fontFamily: sans, cursor: "pointer" }}>
-                Regn ut verdien min →
-              </button>
-              <p style={{ fontSize: 11, opacity: 0.5, margin: "12px 0 0", maxWidth: 400, lineHeight: 1.4 }}>Rabatter og vilkår kan endres – vi tar forbehold om feil og utdaterte tilbud.</p>
-            </div>
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 8 }}>Få oversikt</div>
+            <h1 style={{ fontSize: 25, fontFamily: serif, fontWeight: 600, lineHeight: 1.1, margin: 0, letterSpacing: -0.3, maxWidth: 480 }}>Se fordelene du allerede har</h1>
+            <p style={{ fontSize: 14, opacity: 0.72, margin: "10px 0 0", maxWidth: 440, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og viser {"hvor du faktisk får rabatt."}</p>
           </div>
         )}
 
@@ -553,12 +529,22 @@ export default function Perks() {
           )}
         </div>
 
+        {!showAll && (
+          <div style={{ fontSize: 11, opacity: 0.5, marginBottom: 12, lineHeight: 1.4, maxWidth: 460 }}>
+            Anslag – faktisk verdi avhenger av din situasjon og hvor mye du bruker fordelene.
+          </div>
+        )}
+
         <div style={{ fontSize: 13, opacity: 0.6, marginBottom: 14 }}>
           {showAll ? `Viser alle medlemskap` : `Viser: ${selMemberships.map((m) => m.short).join(", ")}`}
         </div>
 
-        <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Søk etter butikk eller tilbud – f.eks. Esso, Thon, lading…"
-          style={{ width: "100%", boxSizing: "border-box", padding: "15px 16px", fontSize: 16, fontFamily: sans, border: `1.5px solid ${ink}`, borderRadius: 10, background: surface, color: ink, outline: "none" }} />
+        {/* Søkefeltet følger med nedover – festet rett under den sticky headeren.
+           --ph-h settes av public/header.js (header-høyden), med 60px som fallback. */}
+        <div style={{ position: "sticky", top: "var(--ph-h, 60px)", zIndex: 20, background: paper, padding: "8px 0" }}>
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Søk etter butikk eller tilbud – f.eks. Esso, Thon, lading…"
+            style={{ width: "100%", boxSizing: "border-box", padding: "15px 16px", fontSize: 16, fontFamily: sans, border: `1.5px solid ${ink}`, borderRadius: 10, background: surface, color: ink, outline: "none" }} />
+        </div>
 
         <div style={{ display: "flex", gap: 8, overflowX: "auto", padding: "12px 0 10px", WebkitOverflowScrolling: "touch" }}>
           <button onClick={() => setActiveCat("alle")} style={chip(activeCat === "alle")}>Alle</button>
