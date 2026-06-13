@@ -388,6 +388,58 @@ export default function Perks() {
     background: active ? ink : "transparent", color: active ? "#fff" : ink,
   });
 
+  /* Nyhetsbrev-kort – egen blokk i tabellen (mellom «Reise & fly» og «Bank & forsikring»).
+     Følger verdikortets lyse design: hvit bakgrunn med rosa venstrekant. Alltid synlig,
+     uavhengig av valgte medlemskap. */
+  const renderNewsletter = () => (
+    <section style={{ borderRadius: 16, padding: "20px", margin: "20px 0", background: surface, border: "1px solid rgba(0,0,0,0.09)", borderLeft: `4px solid ${accent}`, position: "relative", overflow: "hidden" }}>
+      <div aria-hidden="true" style={{ position: "absolute", right: -24, top: -16, transform: "rotate(-12deg)", opacity: 0.06, color: accent, pointerEvents: "none" }}>
+        {React.createElement(Tag, { size: 150, strokeWidth: 1.4 })}
+      </div>
+      <div style={{ position: "relative" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 8 }}>Nyhetsbrev</div>
+        {subscribed ? (
+          <div style={{ fontSize: 13.5, opacity: 0.85 }}> ✓ Du er på lista – vi sier fra når det lønner seg.
+            <button onClick={() => { setSubscribed(false); setEmail(""); }}
+              style={{ display: "block", marginTop: 8, padding: 0, border: "none", background: "none", color: accent, fontSize: 13, fontFamily: sans, cursor: "pointer", textDecoration: "underline" }}>
+              Meld på en annen e-post
+            </button>
+          </div>
+        ) : (
+          <>
+            <div style={{ fontSize: 13.5, opacity: 0.8, marginBottom: 12, lineHeight: 1.4, maxWidth: 460 }}>
+              Få tips når det lønner seg å bruke fordelene – vi lover å ikke sende for mye.
+            </div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div style={{ position: "relative", flex: "1 1 200px" }}>
+                <input value={email} onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") subscribe(); }}
+                  type="email" placeholder="din@epost.no"
+                  style={{ width: "100%", boxSizing: "border-box", padding: "11px 38px 11px 13px", borderRadius: 9, border: "1px solid rgba(0,0,0,0.15)", fontSize: 14.5, fontFamily: sans, background: "#fff", color: ink, outline: "none" }} />
+                {email && (
+                  <button type="button" onClick={() => setEmail("")} aria-label="Tøm feltet"
+                    style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.08)", color: ink, fontSize: 15, lineHeight: 1, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
+                    ×
+                  </button>
+                )}
+              </div>
+              <button onClick={subscribe} className="btn-pink"
+                style={{ padding: "11px 18px", borderRadius: 9, border: "none", background: accent, color: "#fff", fontSize: 14.5, fontWeight: 600, fontFamily: sans, cursor: "pointer", whiteSpace: "nowrap" }}>
+                Meld meg på
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+
+  /* Hvor nyhetsbrev-kortet skal ligge i den grupperte tabellen: rett før «Bank &
+     forsikring», ellers rett etter «Reise & fly», ellers til slutt – så det alltid vises. */
+  const bankIdx = grouped.findIndex((g) => g.cat.id === "bank");
+  const reiseIdx = grouped.findIndex((g) => g.cat.id === "reise");
+  const newsletterIdx = bankIdx !== -1 ? bankIdx : reiseIdx !== -1 ? reiseIdx + 1 : grouped.length;
+
   return (
     <div style={{ minHeight: "100vh", background: paper, color: ink, fontFamily: sans, padding: "0 0 34px" }}>
       {/* Header (logo + meny) ligger nå i public/header.js – felles for hele nettstedet */}
@@ -432,43 +484,6 @@ export default function Perks() {
                 Vis alle
               </button>
             </div>
-            {/* Nyhetsbrev – i det svarte verdikortet */}
-            <div style={{ marginTop: 16, paddingTop: 15, borderTop: "1px solid rgba(255,255,255,0.15)" }}>
-              {subscribed ? (
-                <div style={{ fontSize: 13.5, opacity: 0.92 }}> ✓ Du er på lista – vi sier fra når det lønner seg.
-                 <button
-                   onClick={() => { setSubscribed(false); setEmail(""); }}
-                   style={{ display: "block", marginTop: 8, padding: 0, border: "none", background: "none", color: accent, fontSize: 13, fontFamily: sans, cursor: "pointer", textDecoration: "underline" }}
-                 >
-                   Meld på en annen e-post
-                 </button>
-               </div>
-              ) : (
-                <>
-                  <div style={{ fontSize: 13.5, opacity: 0.85, marginBottom: 10, lineHeight: 1.4 }}>
-                    Få tips når det lønner seg å bruke fordelene – vi lover å ikke sende for mye.
-                  </div>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    <div style={{ position: "relative", flex: "1 1 150px" }}>
-                      <input value={email} onChange={(e) => setEmail(e.target.value)}
-                        onKeyDown={(e) => { if (e.key === "Enter") subscribe(); }}
-                        type="email" placeholder="din@epost.no"
-                        style={{ width: "100%", boxSizing: "border-box", padding: "11px 38px 11px 13px", borderRadius: 9, border: "none", fontSize: 14.5, fontFamily: sans, background: "#fff", color: ink, outline: "none" }} />
-                      {email && (
-                        <button type="button" onClick={() => setEmail("")} aria-label="Tøm feltet"
-                          style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.10)", color: ink, fontSize: 15, lineHeight: 1, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
-                          ×
-                        </button>
-                      )}
-                    </div>
-                    <button onClick={subscribe} className="btn-pink"
-                      style={{ padding: "11px 18px", borderRadius: 9, border: "none", background: accent, color: "#fff", fontSize: 14.5, fontWeight: 600, fontFamily: sans, cursor: "pointer", whiteSpace: "nowrap" }}>
-                      Meld meg på
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
           </div>
         ) : (
           <div style={{ borderRadius: 16, padding: "22px 20px", marginBottom: 18, background: surface, border: "1px solid rgba(0,0,0,0.09)", borderLeft: `4px solid ${accent}`, position: "relative", overflow: "hidden" }}>
@@ -484,41 +499,6 @@ export default function Perks() {
                 Regn ut verdien min →
               </button>
               <p style={{ fontSize: 11, opacity: 0.5, margin: "12px 0 0", maxWidth: 400, lineHeight: 1.4 }}>Rabatter og vilkår kan endres – vi tar forbehold om feil og utdaterte tilbud.</p>
-              {/* Nyhetsbrev – også i frontkortet */}
-              <div style={{ marginTop: 16, paddingTop: 15, borderTop: "1px solid rgba(0,0,0,0.10)" }}>
-                {subscribed ? (
-                  <div style={{ fontSize: 13.5, opacity: 0.85 }}> ✓ Du er på lista – vi sier fra når det lønner seg.
-                    <button onClick={() => { setSubscribed(false); setEmail(""); }}
-                      style={{ display: "block", marginTop: 8, padding: 0, border: "none", background: "none", color: accent, fontSize: 13, fontFamily: sans, cursor: "pointer", textDecoration: "underline" }}>
-                      Meld på en annen e-post
-                    </button>
-                     </div>
-                   ) : (
-                     <>
-                       <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 10, lineHeight: 1.4 }}>
-                         Få tips når det lønner seg å bruke fordelene – vi lover å ikke sende for mye.
-                       </div>
-                       <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                         <div style={{ position: "relative", flex: "1 1 150px" }}>
-                           <input value={email} onChange={(e) => setEmail(e.target.value)}
-                             onKeyDown={(e) => { if (e.key === "Enter") subscribe(); }}
-                             type="email" placeholder="din@epost.no"
-                             style={{ width: "100%", boxSizing: "border-box", padding: "11px 38px 11px 13px", borderRadius: 9, border: "1px solid rgba(0,0,0,0.15)", fontSize: 14.5, fontFamily: sans, background: "#fff", color: ink, outline: "none" }} />
-                           {email && (
-                             <button type="button" onClick={() => setEmail("")} aria-label="Tøm feltet"
-                               style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.08)", color: ink, fontSize: 15, lineHeight: 1, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
-                               ×
-                             </button>
-                           )}
-                         </div>
-                         <button onClick={subscribe} className="btn-pink"
-                           style={{ padding: "11px 18px", borderRadius: 9, border: "none", background: accent, color: "#fff", fontSize: 14.5, fontWeight: 600, fontFamily: sans, cursor: "pointer", whiteSpace: "nowrap" }}>
-                           Meld meg på
-                         </button>
-                       </div>
-                     </>
-                   )}
-                 </div>
             </div>
           </div>
         )}
@@ -589,10 +569,13 @@ export default function Perks() {
             Ingen treff{query ? ` på «${query}»` : ""}{activeCat !== "alle" ? " i denne kategorien" : ""}.
           </div>
         ) : showGrouped ? (
-          grouped.map(({ cat, rows }) => {
+          <>
+          {grouped.map(({ cat, rows }, gi) => {
             const open = expandedCats.includes(cat.id);
             return (
-            <section key={cat.id} style={{ marginBottom: 20 }}>
+            <React.Fragment key={cat.id}>
+            {gi === newsletterIdx && renderNewsletter()}
+            <section style={{ marginBottom: 20 }}>
               <h2 style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 18, fontFamily: serif, letterSpacing: -0.2, color: ink, margin: "22px 0 11px", fontWeight: 600 }}>
                 {CAT_ICON[cat.id] && React.createElement(CAT_ICON[cat.id], { size: 18, strokeWidth: 2, color: accent })}
                 {cat.label}
@@ -605,8 +588,11 @@ export default function Perks() {
                 </button>
               )}
             </section>
+            </React.Fragment>
             );
-          })
+          })}
+          {newsletterIdx >= grouped.length && renderNewsletter()}
+          </>
         ) : (
           <>
             <div style={{ fontSize: 13, opacity: 0.55, marginBottom: 4 }}>{flat.length} {flat.length === 1 ? "treff" : "treff"}</div>
