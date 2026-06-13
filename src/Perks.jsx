@@ -434,11 +434,13 @@ export default function Perks() {
     </section>
   );
 
-  /* Hvor nyhetsbrev-kortet skal ligge i den grupperte tabellen: rett før «Bank &
-     forsikring», ellers rett etter «Reise & fly», ellers til slutt – så det alltid vises. */
-  const bankIdx = grouped.findIndex((g) => g.cat.id === "bank");
-  const reiseIdx = grouped.findIndex((g) => g.cat.id === "reise");
-  const newsletterIdx = bankIdx !== -1 ? bankIdx : reiseIdx !== -1 ? reiseIdx + 1 : grouped.length;
+  /* Nyhetsbrev-kortet plasseres mellom de to øverste kategoriene i den grupperte
+     tabellen – uavhengig av hvilke kategorier som er synlige. Med bare én kategori
+     havner det rett etter den (håndteres av trailing-renderingen under). */
+  const newsletterIdx = Math.min(1, grouped.length);
+  /* I flat visning (valgt kategori eller søk) vises kortet etter dette antallet
+     tilbud – eller til slutt hvis det er færre treff, så det alltid er synlig. */
+  const NEWSLETTER_AFTER_FLAT = 6;
 
   return (
     <div style={{ minHeight: "100vh", background: paper, color: ink, fontFamily: sans, padding: "0 0 34px" }}>
@@ -596,7 +598,12 @@ export default function Perks() {
         ) : (
           <>
             <div style={{ fontSize: 13, opacity: 0.55, marginBottom: 4 }}>{flat.length} {flat.length === 1 ? "treff" : "treff"}</div>
-            {flat.map((r, i) => <Row key={i} m={r.m} b={r.b} badge />)}
+            {flat.map((r, i) => (
+              <React.Fragment key={i}>
+                <Row m={r.m} b={r.b} badge />
+                {i === Math.min(NEWSLETTER_AFTER_FLAT, flat.length) - 1 && renderNewsletter()}
+              </React.Fragment>
+            ))}
           </>
         )}
 
