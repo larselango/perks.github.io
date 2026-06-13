@@ -153,6 +153,7 @@ export default function Perks() {
   const [pickQuery, setPickQuery] = useState("");
   const [query, setQuery] = useState("");
   const [activeCat, setActiveCat] = useState("alle");
+  const [expandedCats, setExpandedCats] = useState([]); // kategorier utvidet i «Alle»-visningen
   const fontInjected = useRef(false);
   const guidesRef = useRef(null);
   const [email, setEmail] = useState("");
@@ -419,7 +420,7 @@ export default function Perks() {
             </div>
             {/* Kontroller på kortet – fylt rosa knapp, «Vis alle» i lys tekst pga. mørk bakgrunn */}
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 14 }}>
-              <button onClick={() => { setDraft([]); setPicking(true); }} className="btn-pink"
+              <button onClick={() => { setDraft(selected); setPicking(true); }} className="btn-pink"
                 style={{ borderRadius: 8, padding: "9px 15px", fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer", border: "none", background: accent, color: "#fff" }}>
                 Endre medlemskap
               </button>
@@ -475,7 +476,7 @@ export default function Perks() {
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 8 }}>Din fordelsverdi</div>
               <h1 style={{ fontSize: 24, fontFamily: serif, fontWeight: 600, lineHeight: 1.12, margin: 0, letterSpacing: -0.2, maxWidth: 430 }}>Finn fordelene du allerede har</h1>
               <p style={{ fontSize: 13.5, opacity: 0.7, margin: "9px 0 14px", maxWidth: 400, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og viser hvor du faktisk får rabatt.</p>
-              <button onClick={() => { setDraft([]); setPicking(true); }} className="btn-pink"
+              <button onClick={() => { setDraft(selected); setPicking(true); }} className="btn-pink"
                 style={{ border: `1.6px solid ${accent}`, background: "transparent", color: accent, borderRadius: 9, padding: "12px 20px", fontSize: 15, fontWeight: 700, fontFamily: sans, cursor: "pointer" }}>
                 Regn ut verdien min →
               </button>
@@ -551,7 +552,7 @@ export default function Perks() {
 
         {/* Kompakte kontroller – dominerer ikke skjermen */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 12 }}>
-          <button onClick={() => { setDraft([]); setPicking(true); }} className="btn-pink"
+          <button onClick={() => { setDraft(selected); setPicking(true); }} className="btn-pink"
             style={{ borderRadius: 8, padding: "9px 15px", fontSize: 14, fontWeight: 600, fontFamily: sans, cursor: "pointer",
               ...(showAll
                 ? { border: "none", background: accent, color: "#fff" }
@@ -585,21 +586,24 @@ export default function Perks() {
             Ingen treff{query ? ` på «${query}»` : ""}{activeCat !== "alle" ? " i denne kategorien" : ""}.
           </div>
         ) : showGrouped ? (
-          grouped.map(({ cat, rows }) => (
+          grouped.map(({ cat, rows }) => {
+            const open = expandedCats.includes(cat.id);
+            return (
             <section key={cat.id} style={{ marginBottom: 20 }}>
               <h2 style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 18, fontFamily: serif, letterSpacing: -0.2, color: ink, margin: "22px 0 11px", fontWeight: 600 }}>
                 {CAT_ICON[cat.id] && React.createElement(CAT_ICON[cat.id], { size: 18, strokeWidth: 2, color: accent })}
                 {cat.label}
               </h2>
-              {rows.slice(0, 4).map((r, i) => <Row key={cat.id + i} m={r.m} b={r.b} />)}
+              {(open ? rows : rows.slice(0, 4)).map((r, i) => <Row key={cat.id + i} m={r.m} b={r.b} />)}
               {rows.length > 4 && (
-                <button onClick={() => setActiveCat(cat.id)}
+                <button onClick={() => setExpandedCats((e) => e.includes(cat.id) ? e.filter((x) => x !== cat.id) : [...e, cat.id])}
                   style={{ border: "none", background: "none", color: ink, opacity: 0.5, fontWeight: 600, fontSize: 12.5, cursor: "pointer", fontFamily: sans, padding: "9px 2px 2px" }}>
-                  Vis alle {rows.length} →
+                  {open ? "Vis færre ↑" : `Vis alle ${rows.length} →`}
                 </button>
               )}
             </section>
-          ))
+            );
+          })
         ) : (
           <>
             <div style={{ fontSize: 13, opacity: 0.55, marginBottom: 4 }}>{flat.length} {flat.length === 1 ? "treff" : "treff"}</div>

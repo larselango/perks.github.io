@@ -42,6 +42,14 @@ export const CAT_LABEL = Object.fromEntries(CATEGORIES.map((c) => [c.id, c.label
 /* ---------- Katalog (kuratert, sist undersøkt mai 2026) ---------- */
 
 /* ---------- KATALOGEN – organisasjoner og fordeler (det viktigste å vedlikeholde) ---------- */
+
+/* Hver organisasjon har en felles «url» (medlemskapets fordelsside). Hver fordel
+   er { merchant, note, cats, kw } og kan I TILLEGG ha sin EGEN «url» – da lenker
+   akkurat den fordelen dit, i stedet for til medlemskapets felles side. Mangler
+   «url» på fordelen, brukes organisasjonens url automatisk. Du kan derfor fylle
+   inn unike lenker gradvis, én fordel av gangen. Eksempel:
+     { merchant: "Scandic Hotels", note: "14 % på hotell", cats: ["reise"], kw: ["hotell"],
+       url: "https://www.lofavor.no/fordel/scandic" },   // ← unik lenke kun for denne */
 export const CATALOG = [
   {
     id: "lo", name: "LOfavør", short: "LOfavør", sub: "LO-forbundene", aliases: ["Fagforbundet", "Fellesforbundet", "Handel og Kontor", "HK", "EL og IT", "Industri Energi", "Norsk Arbeidsmandsforbund", "FO", "NTL", "Skolenes landsforbund", "Norsk Nærings- og Nytelsesmiddelarbeiderforbund", "Norsk Tjenestemannslag", "Norsk Sjømannsforbund", "Norsk Post- og Kommunikasjonsforbund", "Postkom", "Creo", "Norsk Lokomotivmannsforbund", "Forbundet for Ledelse og Teknikk", "FLT", "Norsk Jernbaneforbund"], color: "#C8102E", cost: 0, url: "https://www.lofavor.no/",
