@@ -446,7 +446,7 @@ export default function Perks() {
               ) : (
                 <>
                   <div style={{ fontSize: 13.5, opacity: 0.85, marginBottom: 10, lineHeight: 1.4 }}>
-                    Få tips når fordelene dine er mest aktuelle – vi lover å ikke sende for mye.
+                    Få tips når det lønner seg å bruke fordelene – vi lover å ikke sende for mye.
                   </div>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     <div style={{ position: "relative", flex: "1 1 150px" }}>
@@ -477,13 +477,13 @@ export default function Perks() {
             </div>
             <div style={{ position: "relative" }}>
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 8 }}>Din fordelsverdi</div>
-              <h1 style={{ fontSize: 24, fontFamily: serif, fontWeight: 600, lineHeight: 1.12, margin: 0, letterSpacing: -0.2, maxWidth: 430 }}>Finn fordelene du allerede har</h1>
-              <p style={{ fontSize: 13.5, opacity: 0.7, margin: "9px 0 14px", maxWidth: 400, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og viser {"hvor du faktisk får rabatt."}</p>
+              <h1 style={{ fontSize: 22, fontFamily: serif, fontWeight: 600, lineHeight: 1.12, margin: 0, letterSpacing: -0.2, maxWidth: 430 }}>Finn fordelene du allerede har</h1>
+              <p style={{ fontSize: 13, opacity: 0.7, margin: "9px 0 14px", maxWidth: 400, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og viser {"hvor du faktisk får rabatt."}</p>
               <button onClick={() => { setDraft(selected); setPicking(true); }} className="btn-pink"
                 style={{ border: `1.6px solid ${accent}`, background: "transparent", color: accent, borderRadius: 9, padding: "12px 20px", fontSize: 15, fontWeight: 700, fontFamily: sans, cursor: "pointer" }}>
                 Regn ut verdien min →
               </button>
-              <p style={{ fontSize: 11.5, opacity: 0.5, margin: "12px 0 0", maxWidth: 400, lineHeight: 1.4 }}>Rabatter og vilkår kan endres – vi tar forbehold om feil og utdaterte tilbud.</p>
+              <p style={{ fontSize: 11, opacity: 0.5, margin: "12px 0 0", maxWidth: 400, lineHeight: 1.4 }}>Rabatter og vilkår kan endres – vi tar forbehold om feil og utdaterte tilbud.</p>
               {/* Nyhetsbrev – også i frontkortet */}
               <div style={{ marginTop: 16, paddingTop: 15, borderTop: "1px solid rgba(0,0,0,0.10)" }}>
                 {subscribed ? (
@@ -495,8 +495,8 @@ export default function Perks() {
                      </div>
                    ) : (
                      <>
-                       <div style={{ fontSize: 13.5, opacity: 0.8, marginBottom: 10, lineHeight: 1.4 }}>
-                         Vil du vite når det lønner seg å bruke fordelene dine? Få tips når de er mest aktuelle – vi lover å ikke sende for mange e-poster.
+                       <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 10, lineHeight: 1.4 }}>
+                         Få tips når det lønner seg å bruke fordelene – vi lover å ikke sende for mye.
                        </div>
                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                          <div style={{ position: "relative", flex: "1 1 150px" }}>
