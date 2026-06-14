@@ -92,36 +92,39 @@
          JavaScript er av; det byttes ut med appen så snart den laster. -->
     <div id="site-header"></div>
     <div id="root">
-      <!-- Statisk «boot»-innhold: ekte, lesbart innhold for søkemotorer, delings-
-           forhåndsvisninger og brukere uten JavaScript. Appen bytter ut hele #root
-           så snart den laster, så dette vises bare et øyeblikk for vanlige besøkende. -->
-      <div style="min-height:100vh;background:#f4f4f6;color:#0d0c22;font-family:system-ui,-apple-system,'Hanken Grotesk',sans-serif">
-        <div style="max-width:720px;margin:0 auto;padding:46px 20px">
-          <div style="font-size:30px;font-weight:700;letter-spacing:-0.5px;margin-bottom:24px">perks<span style="color:#d76e98">.</span></div>
-          <h1 style="font-size:32px;line-height:1.12;letter-spacing:-0.5px;margin:0 0 14px">Finn medlemsfordelene du allerede har – og se hva de er verdt</h1>
-          <p style="font-size:18px;line-height:1.5;opacity:.82;margin:0 0 16px">
-            perks er en gratis, uavhengig oversikt over norske medlemsfordeler. Velg
-            medlemskapene og fordelsprogrammene dine, så samler vi over 700 rabatter og
-            fordeler fra 18 organisasjoner på ett sted – og anslår hva de faktisk er verdt.
-          </p>
-          <p style="font-size:15.5px;line-height:1.55;opacity:.72;margin:0 0 18px">
-            Fungerer med blant andre <strong>LO (LOfavør)</strong>, <strong>OBOS</strong>,
-            <strong>NAF</strong>, <strong>Unio</strong>, <strong>Coop</strong>,
-            <strong>Trumf</strong>, DNT, YS, Tekna og NITO. Du ser blant annet medlemsrabatter
-            på reise og hotell, bank og forsikring, drivstoff og lading, strøm, og mat – og
-            hvilke fordeler som har en reell kroneverdi. Ingen innlogging, ingen sporings-cookies.
-          </p>
-          <p style="font-size:15.5px;line-height:1.7;opacity:.85;margin:0 0 18px">
-            <strong style="opacity:.9">Medlemsfordeler per organisasjon:</strong> <!--PERKS_MEMBERSHIP_LINKS-->
-          </p>
-          <p style="font-size:15.5px;margin:0 0 22px">
-            <a href="/er-lofavor-verdt-det.html" style="color:#d76e98;font-weight:600;text-decoration:none">Guide: Er LO-medlemskap verdt det?</a>
-          </p>
-          <p style="font-size:14px;opacity:.5;margin:0">Laster den interaktive oversikten …</p>
-          <noscript>
-            <p style="font-size:15px;opacity:.75;margin:14px 0 0">Den interaktive oversikten krever JavaScript. Teksten over forklarer hva perks er og hvilke medlemsfordeler du finner.</p>
-          </noscript>
-        </div>
+      <!-- Det brukeren ser i det korte øyeblikket før appen laster: full-skjerm,
+           sentrert logo. Rolig og nøytralt, så overgangen til appen ikke blinker. -->
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f4f4f6;color:#0d0c22;font-family:system-ui,-apple-system,'Hanken Grotesk',sans-serif">
+        <div style="font-size:34px;font-weight:700;letter-spacing:-0.5px">perks<span style="color:#d76e98">.</span></div>
+      </div>
+
+      <!-- SEO-innhold UNDER «folden»: ekte, lesbart innhold for søkemotorer og
+           brukere uten JavaScript. Logoen over fyller skjermen, så dette synes ikke
+           i laste-flashen for vanlige besøkende. Appen bytter ut hele #root ved lasting.
+           (Ikke skjult/hvit tekst – bare plassert lenger ned, som er trygt for SEO.) -->
+      <div style="max-width:720px;margin:0 auto;padding:8px 20px 56px;color:#0d0c22;font-family:system-ui,-apple-system,'Hanken Grotesk',sans-serif">
+        <h1 style="font-size:32px;line-height:1.12;letter-spacing:-0.5px;margin:0 0 14px">Finn medlemsfordelene du allerede har – og se hva de er verdt</h1>
+        <p style="font-size:18px;line-height:1.5;opacity:.82;margin:0 0 16px">
+          perks er en gratis, uavhengig oversikt over norske medlemsfordeler. Velg
+          medlemskapene og fordelsprogrammene dine, så samler vi over 700 rabatter og
+          fordeler fra 18 organisasjoner på ett sted – og anslår hva de faktisk er verdt.
+        </p>
+        <p style="font-size:15.5px;line-height:1.55;opacity:.72;margin:0 0 18px">
+          Fungerer med blant andre <strong>LO (LOfavør)</strong>, <strong>OBOS</strong>,
+          <strong>NAF</strong>, <strong>Unio</strong>, <strong>Coop</strong>,
+          <strong>Trumf</strong>, DNT, YS, Tekna og NITO. Du ser blant annet medlemsrabatter
+          på reise og hotell, bank og forsikring, drivstoff og lading, strøm, og mat – og
+          hvilke fordeler som har en reell kroneverdi. Ingen innlogging, ingen sporings-cookies.
+        </p>
+        <p style="font-size:15.5px;line-height:1.7;opacity:.85;margin:0 0 18px">
+          <strong style="opacity:.9">Medlemsfordeler per organisasjon:</strong> <!--PERKS_MEMBERSHIP_LINKS-->
+        </p>
+        <p style="font-size:15.5px;margin:0 0 0">
+          <a href="/er-lofavor-verdt-det.html" style="color:#d76e98;font-weight:600;text-decoration:none">Guide: Er LO-medlemskap verdt det?</a>
+        </p>
+        <noscript>
+          <p style="font-size:15px;opacity:.75;margin:18px 0 0">Den interaktive oversikten krever JavaScript. Teksten over forklarer hva perks er og hvilke medlemsfordeler du finner.</p>
+        </noscript>
       </div>
     </div>
     <div id="site-footer"></div>
