@@ -9,14 +9,13 @@
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Tag } from "lucide-react";
-import { CATEGORIES, CAT_LABEL, CATALOG, ORG_RANK, POPULAR, AUTO_VALUE, GUIDES, ARTICLES, MENU, SITE } from "./content.js";
+import { CATEGORIES, CAT_LABEL, CATALOG, ORG_RANK, POPULAR, AUTO_VALUE, GUIDES, ARTICLES, MENU } from "./content.js";
 import { CAT_ICON, iconOf, iconByName } from "./icons.js";
 import { ink, paper, accent, surface, pop, fonts, googleFontsUrl } from "./theme.js";
 import { storage } from "./storage.js";
 
 /* ---------- nøkler + avledet ---------- */
 const SEL_KEY = "perks:selected:v2";
-const SUB_KEY = "perks:subscribed:v1";
 const ALL_IDS = CATALOG.map((m) => m.id);
 /* Visnings­rekkefølge for organisasjoner (grunnet juni 2026).
    Ekte medlemsorganisasjoner/paraplyer øverst (LO, OBOS, NAF, Unio), deretter de store
@@ -156,8 +155,6 @@ export default function Perks() {
   const [expandedCats, setExpandedCats] = useState([]); // kategorier utvidet i «Alle»-visningen
   const fontInjected = useRef(false);
   const guidesRef = useRef(null);
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     if (fontInjected.current) return;
@@ -237,32 +234,6 @@ export default function Perks() {
   }, [selMemberships, presentCats]);
 
   const valueEst = useMemo(() => estimateValue(selMemberships), [selMemberships]);
-
-  useEffect(() => {
-    (async () => {
-      try { const r = await storage.get(SUB_KEY); if (r && r.value) setSubscribed(true); } catch {}
-    })();
-  }, []);
-
-  const subscribe = async () => {
-    const e = email.trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return;
-    setSubscribed(true);
-    try { await storage.set(SUB_KEY, e); } catch {}
-    // Send til EmailOctopus hvis skjema-URL er satt i content.js (SITE.emailoctopusFormAction).
-    // mode:"no-cors" -> vi kan ikke lese svaret, men påmeldingen registreres. Skru på
-    // dobbel opt-in i EmailOctopus, så får brukeren en bekreftelses-e-post.
-      if (SITE.emailoctopusFormAction) {
-       try {
-         const r = await fetch(SITE.emailoctopusFormAction, {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify({ email: e }),
-         });
-         if (!r.ok) console.error("Påmelding feilet:", await r.text());
-       } catch (err) { console.error(err); }
-     }
-  };
 
   /* styling – farger/fonter kommer fra theme.js */
   const serif = fonts.serif, sans = fonts.sans;
@@ -388,52 +359,9 @@ export default function Perks() {
     background: active ? ink : "transparent", color: active ? "#fff" : ink,
   });
 
-  /* Nyhetsbrev-kort – egen blokk i tabellen (mellom «Reise & fly» og «Bank & forsikring»).
-     Følger verdikortets lyse design: hvit bakgrunn med rosa venstrekant. Alltid synlig,
-     uavhengig av valgte medlemskap. */
-  const renderNewsletter = () => (
-    <section style={{ borderRadius: 16, padding: "22px 20px", margin: "20px 0", background: tint(accent, 0.08), border: `1px solid ${tint(accent, 0.28)}`, borderLeft: `4px solid ${accent}`, position: "relative", overflow: "hidden" }}>
-      <div aria-hidden="true" style={{ position: "absolute", right: -24, top: -16, transform: "rotate(-12deg)", opacity: 0.06, color: accent, pointerEvents: "none" }}>
-        {React.createElement(Tag, { size: 150, strokeWidth: 1.4 })}
-      </div>
-      <div style={{ position: "relative" }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 6 }}>Nyhetsbrev</div>
-        <h3 style={{ fontFamily: serif, fontSize: 19, fontWeight: 600, lineHeight: 1.15, letterSpacing: -0.2, margin: "0 0 8px", color: ink }}>Gå aldri glipp av en god deal</h3>
-        {subscribed ? (
-          <div style={{ fontSize: 13.5, opacity: 0.85 }}> ✓ Du er på lista – vi sier fra når det lønner seg.
-            <button onClick={() => { setSubscribed(false); setEmail(""); }}
-              style={{ display: "block", marginTop: 8, padding: 0, border: "none", background: "none", color: accent, fontSize: 13, fontFamily: sans, cursor: "pointer", textDecoration: "underline" }}>
-              Meld på en annen e-post
-            </button>
-          </div>
-        ) : (
-          <>
-            <div style={{ fontSize: 13.5, opacity: 0.8, marginBottom: 12, lineHeight: 1.4, maxWidth: 460 }}>
-              Få tips når det lønner seg å bruke fordelene – vi lover å ikke sende for mye.
-            </div>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <div style={{ position: "relative", flex: "1 1 200px" }}>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") subscribe(); }}
-                  type="email" placeholder="din@epost.no"
-                  style={{ width: "100%", boxSizing: "border-box", padding: "11px 38px 11px 13px", borderRadius: 9, border: "1px solid rgba(0,0,0,0.15)", fontSize: 14.5, fontFamily: sans, background: "#fff", color: ink, outline: "none" }} />
-                {email && (
-                  <button type="button" onClick={() => setEmail("")} aria-label="Tøm feltet"
-                    style={{ position: "absolute", right: 6, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.08)", color: ink, fontSize: 15, lineHeight: 1, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
-                    ×
-                  </button>
-                )}
-              </div>
-              <button onClick={subscribe} className="btn-pink"
-                style={{ padding: "11px 18px", borderRadius: 9, border: "none", background: accent, color: "#fff", fontSize: 14.5, fontWeight: 600, fontFamily: sans, cursor: "pointer", whiteSpace: "nowrap" }}>
-                Meld meg på
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-    </section>
-  );
+  /* Nyhetsbrev-kortet rendres fra den delte modulen public/newsletter.js
+     (via <NewsletterSlot/> nedenfor), så det er ÉN kilde for både forsiden og
+     de statiske artikkelsidene – og ser dermed alltid likt ut. */
 
   /* Nyhetsbrev-kortet plasseres mellom de to øverste kategoriene i den grupperte
      tabellen – uavhengig av hvilke kategorier som er synlige. Med bare én kategori
@@ -560,7 +488,7 @@ export default function Perks() {
             const open = expandedCats.includes(cat.id);
             return (
             <React.Fragment key={cat.id}>
-            {gi === newsletterIdx && renderNewsletter()}
+            {gi === newsletterIdx && <NewsletterSlot />}
             <section style={{ marginBottom: 20 }}>
               <h2 style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 18, fontFamily: serif, letterSpacing: -0.2, color: ink, margin: "22px 0 11px", fontWeight: 600 }}>
                 {CAT_ICON[cat.id] && React.createElement(CAT_ICON[cat.id], { size: 18, strokeWidth: 2, color: accent })}
@@ -577,7 +505,7 @@ export default function Perks() {
             </React.Fragment>
             );
           })}
-          {newsletterIdx >= grouped.length && renderNewsletter()}
+          {newsletterIdx >= grouped.length && <NewsletterSlot />}
           </>
         ) : (
           <>
@@ -585,7 +513,7 @@ export default function Perks() {
             {flat.map((r, i) => (
               <React.Fragment key={i}>
                 <Row m={r.m} b={r.b} badge />
-                {i === Math.min(NEWSLETTER_AFTER_FLAT, flat.length) - 1 && renderNewsletter()}
+                {i === Math.min(NEWSLETTER_AFTER_FLAT, flat.length) - 1 && <NewsletterSlot />}
               </React.Fragment>
             ))}
           </>
@@ -623,3 +551,20 @@ export default function Perks() {
 }
 
 const linkBtn = (color) => ({ border: "none", background: "none", color, fontWeight: 600, cursor: "pointer", fontSize: 14, padding: 0, textDecoration: "underline", fontFamily: fonts.sans });
+
+/* Nyhetsbrev-kortet: en tynn React-wrapper som lar den delte modulen
+   public/newsletter.js tegne seg selv inn i en egen div. Modulen styrer sin
+   egen DOM (React rører den ikke), så vi får samme uttrykk som på statiske
+   sider og slipper duplisert markup. */
+function NewsletterSlot() {
+  const ref = useRef(null);
+  useEffect(() => {
+    let tries = 0;
+    const tryMount = () => {
+      if (ref.current && window.perksNewsletter) { window.perksNewsletter.mount(ref.current); return; }
+      if (tries++ < 20) setTimeout(tryMount, 50); // vent på at /newsletter.js er lastet
+    };
+    tryMount();
+  }, []);
+  return <div ref={ref} />;
+}

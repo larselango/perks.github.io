@@ -260,19 +260,21 @@
       .lf-chip .c { opacity: .5; margin-left: 4px; }
       .lf-chip.active .c { opacity: .8; }
       .lf-grid { display: grid; gap: 10px; }
+      /* Kortene følger samme uttrykk som tilbudskortene på forsiden. */
       .lf-card {
         display: block; text-decoration: none; color: inherit;
-        background: var(--surface); border: 1px solid var(--line); border-radius: 13px;
-        padding: 14px 16px; transition: border-color .12s ease, transform .12s ease;
+        background: var(--surface); border: 1px solid rgba(0,0,0,.085); border-radius: 14px;
+        padding: 14px 15px; transition: border-color .13s ease, transform .13s ease, box-shadow .13s ease;
       }
-      .lf-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+      .lf-card:hover { border-color: rgba(215,110,152,.42); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(13,12,34,.10); }
       .lf-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-      .lf-merch { font-family: var(--serif); font-weight: 600; font-size: 16px; }
+      .lf-merch { font-family: var(--serif); font-weight: 600; font-size: 17px; line-height: 1.18; color: var(--ink); }
       .lf-cat {
-        flex: none; font-size: 11px; font-weight: 600; letter-spacing: .3px;
-        text-transform: uppercase; color: var(--accent); opacity: .85; white-space: nowrap;
+        flex: none; font-size: 12px; font-weight: 600; color: var(--ink); opacity: .62;
+        white-space: nowrap; display: inline-flex; align-items: center; gap: 5px;
       }
-      .lf-note { font-size: 14px; opacity: .75; margin: 4px 0 0; }
+      .lf-cat::before { content: ""; width: 7px; height: 7px; border-radius: 7px; background: var(--accent); flex: none; }
+      .lf-note { font-size: 13.5px; opacity: .74; margin: 4px 0 0; line-height: 1.4; }
       .lf-value {
         display: inline-block; margin-top: 9px; font-size: 12.5px; font-weight: 600;
         color: var(--green); background: rgba(31,138,91,.10); border-radius: 7px; padding: 3px 9px;
