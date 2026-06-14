@@ -262,11 +262,13 @@
       .lf-grid { display: grid; gap: 10px; }
       /* Kortene følger samme uttrykk som tilbudskortene på forsiden. */
       .lf-card {
-        display: block; text-decoration: none; color: inherit;
+        display: flex; align-items: flex-start; gap: 13px; text-decoration: none; color: inherit;
         background: var(--surface); border: 1px solid rgba(0,0,0,.085); border-radius: 14px;
         padding: 14px 15px; transition: border-color .13s ease, transform .13s ease, box-shadow .13s ease;
       }
       .lf-card:hover { border-color: rgba(215,110,152,.42); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(13,12,34,.10); }
+      .lf-ic { width: 42px; height: 42px; border-radius: 12px; flex: none; display: flex; align-items: center; justify-content: center; }
+      .lf-body { flex: 1; min-width: 0; }
       .lf-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
       .lf-merch { font-family: var(--serif); font-weight: 600; font-size: 17px; line-height: 1.18; color: var(--ink); }
       .lf-cat {
@@ -278,6 +280,10 @@
       .lf-value {
         display: inline-block; margin-top: 9px; font-size: 12.5px; font-weight: 600;
         color: var(--green); background: rgba(31,138,91,.10); border-radius: 7px; padding: 3px 9px;
+      }
+      .lf-more {
+        margin: 12px 0 0; border: none; background: none; color: var(--accent);
+        font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; padding: 4px 2px;
       }
       .lf-foot { margin: 16px 0 0; font-size: 14px; }
       .lf-foot a { color: var(--accent); text-decoration: none; font-weight: 600; }
@@ -472,6 +478,31 @@
         </p>
       </div>
 
+      <!-- ===== INNEBYGD LOFAVØR-OVERSIKT =====
+           Samme data som forsiden (src/content.js → id:"lo"), filtrert til
+           LOfavør og sortert likt (kjente merker først, så høyest rabatt).
+           Innholdet hentes fra /data/lofavor.json, som bygges automatisk fra
+           content.js (se scripts/build-data.mjs). Dermed: én kilde, alltid fersk. -->
+      <h2>Sjekk rabattene du får med LOfavør</h2>
+      <div class="lf-section">
+        <p class="lf-intro">
+          Dette er tilbud du kan bruke som LO-medlem – ikke penger du får automatisk.
+          Den eneste med fast årsverdi er innboforsikringen, markert i grønt.
+        </p>
+        <div id="lofavor-list">
+          <p class="lf-empty">Laster fordeler …</p>
+        </div>
+        <p class="lf-fine">
+          Rabattene er tilbud du kan bruke som medlem – ikke penger du får. Bare
+          innboforsikringen har en automatisk kroneverdi, og den er et anslag basert
+          på markedspris; resten avhenger av at du faktisk handler. Lenker til LOfavør
+          kan være annonselenker.
+        </p>
+        <p class="lf-foot">
+          <a href="/">Se alle medlemskapene dine på forsiden →</a>
+        </p>
+      </div>
+
       <h2>Ofte stilte spørsmål</h2>
       <div class="faq">
         <details>
@@ -527,31 +558,6 @@
         <li>Markedspriser på innboforsikring, ulike tilbydere, juni 2026.</li>
       </ul>
 
-      <!-- ===== INNEBYGD LOFAVØR-OVERSIKT =====
-           Samme data som forsiden (src/content.js → id:"lo"), filtrert til
-           LOfavør og sortert likt (kjente merker først, så høyest rabatt).
-           Innholdet hentes fra /data/lofavor.json, som bygges automatisk fra
-           content.js (se scripts/build-data.mjs). Dermed: én kilde, alltid fersk. -->
-      <h2>Sjekk rabattene du får med LOfavør</h2>
-      <div class="lf-section">
-        <p class="lf-intro">
-          Dette er tilbud du kan bruke som LO-medlem – ikke penger du får automatisk.
-          Den eneste med fast årsverdi er innboforsikringen, markert i grønt.
-        </p>
-        <div id="lofavor-list">
-          <p class="lf-empty">Laster fordeler …</p>
-        </div>
-        <p class="lf-fine">
-          Rabattene er tilbud du kan bruke som medlem – ikke penger du får. Bare
-          innboforsikringen har en automatisk kroneverdi, og den er et anslag basert
-          på markedspris; resten avhenger av at du faktisk handler. Lenker til LOfavør
-          kan være annonselenker.
-        </p>
-        <p class="lf-foot">
-          <a href="/">Se alle medlemskapene dine på forsiden →</a>
-        </p>
-      </div>
-
       <!-- ===== NYHETSBREV (gjenbrukbar modul – public/newsletter.js) ===== -->
       <div data-perks-newsletter></div>
 
@@ -581,10 +587,22 @@
         function render(data) {
           var items = data.items || [];
           var labels = data.catLabels || {};
-          var state = { cat: "alle" };
+          var color = data.color || "#d76e98";
+          var LIMIT = 10; // maks antall i «Alle» før «Vis alle»
+
+          var state = { cat: "alle", expanded: false };
+
+          // hex -> rgba (samme tinting som forsidens ikonfelt)
+          function tint(hex, a) {
+            var h = hex.replace("#", "");
+            if (h.length === 3) h = h.split("").map(function (c) { return c + c; }).join("");
+            var r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16);
+            return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+          }
 
           var chips = document.createElement("div"); chips.className = "lf-chips";
           var grid = document.createElement("div"); grid.className = "lf-grid";
+          var more = document.createElement("div");
 
           // tell opp kategorier
           var counts = {};
@@ -598,7 +616,7 @@
             b.type = "button";
             b.className = "lf-chip" + (state.cat === id ? " active" : "");
             b.innerHTML = label + ' <span class="c">' + count + "</span>";
-            b.onclick = function () { state.cat = id; update(); };
+            b.onclick = function () { state.cat = id; state.expanded = false; update(); };
             return b;
           }
           function mkCard(it) {
@@ -606,15 +624,22 @@
             a.className = "lf-card"; a.href = it.url || "#";
             a.target = "_blank"; a.rel = "nofollow noopener";
             a.innerHTML =
-              '<div class="lf-top"><span class="lf-merch"></span><span class="lf-cat"></span></div>' +
-              '<div class="lf-note"></div>';
+              '<span class="lf-ic" aria-hidden="true"></span>' +
+              '<div class="lf-body">' +
+                '<div class="lf-top"><span class="lf-merch"></span><span class="lf-cat"></span></div>' +
+                '<div class="lf-note"></div>' +
+              '</div>';
+            var ic = a.querySelector(".lf-ic");
+            ic.innerHTML = it.iconSvg || ""; // SVG fra src/icons.js (samme som forsiden)
+            ic.style.background = tint(color, 0.15);
+            ic.style.color = "rgba(13,12,34,0.62)";
             a.querySelector(".lf-merch").textContent = it.merchant || "";
             a.querySelector(".lf-cat").textContent = it.catLabel || "";
             a.querySelector(".lf-note").textContent = it.note || "";
             if (it.value) {
               var p = document.createElement("span"); p.className = "lf-value";
               p.textContent = "≈ " + Number(it.value).toLocaleString("no-NO") + " kr/år inkludert";
-              a.appendChild(p);
+              a.querySelector(".lf-body").appendChild(p);
             }
             return a;
           }
@@ -622,16 +647,25 @@
             chips.innerHTML = "";
             chips.appendChild(mkChip("alle", "Alle", items.length));
             catIds.forEach(function (c) { chips.appendChild(mkChip(c, labels[c] || c, counts[c])); });
-            grid.innerHTML = "";
-            var list = state.cat === "alle"
+            grid.innerHTML = ""; more.innerHTML = "";
+            var full = state.cat === "alle"
               ? items
               : items.filter(function (it) { return (it.cats || []).indexOf(state.cat) > -1; });
-            if (!list.length) { grid.innerHTML = '<p class="lf-empty">Ingen tilbud her.</p>'; return; }
-            list.forEach(function (it) { grid.appendChild(mkCard(it)); });
+            if (!full.length) { grid.innerHTML = '<p class="lf-empty">Ingen tilbud her.</p>'; return; }
+            // I «Alle»: maks LIMIT til man klikker «Vis alle». I en valgt kategori: vis alt.
+            var capped = state.cat === "alle" && !state.expanded && full.length > LIMIT;
+            (capped ? full.slice(0, LIMIT) : full).forEach(function (it) { grid.appendChild(mkCard(it)); });
+            if (capped) {
+              var btn = document.createElement("button");
+              btn.type = "button"; btn.className = "lf-more";
+              btn.textContent = "Vis alle " + full.length + " tilbud →";
+              btn.onclick = function () { state.expanded = true; update(); };
+              more.appendChild(btn);
+            }
           }
 
           mount.innerHTML = "";
-          mount.appendChild(chips); mount.appendChild(grid);
+          mount.appendChild(chips); mount.appendChild(grid); mount.appendChild(more);
           update();
         }
 
