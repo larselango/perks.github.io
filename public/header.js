@@ -81,6 +81,15 @@
       '</div>' +
     '</div>';
 
+  // Eksponer den synlige bar-høyden som CSS-variabel (--ph-h), så elementer på
+  // forsiden (f.eks. det sticky søkefeltet) kan feste seg rett under headeren.
+  var bar = mount.querySelector(".ph-bar");
+  function setHeaderHeightVar() {
+    if (bar) document.documentElement.style.setProperty("--ph-h", bar.offsetHeight + "px");
+  }
+  setHeaderHeightVar();
+  window.addEventListener("resize", setHeaderHeightVar);
+
   var menu = mount.querySelector(".ph-menu");
   var burger = mount.querySelector(".ph-burger");
 
