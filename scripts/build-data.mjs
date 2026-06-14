@@ -20,10 +20,19 @@
    slikt, flytt dataene som trengs til en egen datafil.
    ===================================================================== */
 import { CATALOG, CAT_LABEL, POPULAR, AUTO_VALUE } from "../src/content.js";
+import { iconOf } from "../src/icons.js";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { writeFileSync, mkdirSync } from "node:fs";
 
 const lo = CATALOG.find((o) => o.id === "lo");
 if (!lo) { console.error("Fant ikke LOfavør (id: 'lo') i CATALOG."); process.exit(1); }
+
+/* Ikonet for hver fordel hentes fra SAMME kilde som forsiden (src/icons.js),
+   og tegnes til en SVG-streng (lucide bruker stroke:currentColor, så fargen
+   styres av kortet). Slik blir ikonet identisk med forsidens. */
+const iconSvgFor = (b) =>
+  renderToStaticMarkup(createElement(iconOf(b), { width: 20, height: 20, strokeWidth: 1.9 }));
 
 /* Samme hjelpere som src/Perks.jsx bruker, så rekkefølgen blir lik forsiden. */
 const scoreOf = (note) => {
@@ -54,6 +63,7 @@ const items = lo.benefits
       cats,
       catLabel: CAT_LABEL[cats[0]] || "Andre tilbud",
       url: b.url || lo.url,
+      iconSvg: iconSvgFor(b),
       _pop: popRank(b.merchant),
       _score: scoreOf(b.note),
     };
@@ -68,5 +78,5 @@ const catLabels = {};
 items.forEach((it) => it.cats.forEach((c) => { catLabels[c] = CAT_LABEL[c] || c; }));
 
 mkdirSync("public/data", { recursive: true });
-writeFileSync("public/data/lofavor.json", JSON.stringify({ catLabels, items }));
+writeFileSync("public/data/lofavor.json", JSON.stringify({ color: lo.color, catLabels, items }));
 console.log("✓ public/data/lofavor.json skrevet med", items.length, "LOfavør-fordeler.");
