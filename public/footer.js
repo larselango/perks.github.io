@@ -43,7 +43,7 @@
       ".pf-p strong{opacity:0.85}" +
       ".pf-link{margin:0 0 10px}" +
       ".pf-link a{color:" + ACCENT + ";text-decoration:none}" +
-      ".pf-fine{margin:0 0 4px;color:" + INK + ";opacity:0.5}";
+      ".pf-fine{margin:0 0 12px;color:" + INK + ";opacity:0.5}";
     document.head.appendChild(style);
   }
 
@@ -58,10 +58,10 @@
         '<textarea class="pf-textarea" rows="3" placeholder="Skriv her – f.eks. «Rabatten hos … ser ut til å ha endret seg»"></textarea>' +
         '<button class="pf-send" type="button">Send inn</button>' +
       '</div>' +
+      '<p class="pf-fine">Rabatter og vilkår kan endres – vi tar forbehold om feil og utdaterte tilbud. Sjekk alltid det som gjelder hos tilbyderen. Sist undersøkt juni 2026.</p>' +
       '<p class="pf-p"><strong>perks</strong> er en uavhengig oversikt over medlemsfordeler i Norge.</p>' +
       '<p class="pf-p">Vi bruker ingen sporings-cookies. Melder du deg på nyhetsbrevet, lagrer vi e-postadressen din – kun for å sende deg nyhetsbrevet, og du kan melde deg av når som helst.</p>' +
       '<p class="pf-link"><a href="/personvern.html">Personvernerklæring</a></p>' +
-      '<p class="pf-fine">Rabatter og vilkår kan endres – sjekk alltid det som gjelder hos tilbyderen. Sist undersøkt juni 2026.</p>' +
     '</div>';
 
   var textarea = mount.querySelector(".pf-textarea");

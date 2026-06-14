@@ -914,7 +914,7 @@ export const ARTICLES = [
 
 /* ---------- GUIDER – «kommer snart»-kort nederst ---------- */
 export const GUIDES = [
-  { title: "Er LO-medlemskap verdt det?", tint: "#d9e3d2" },
+  { title: "Er LO-medlemskap verdt det?", tint: "#d9e3d2", url: "/er-lofavor-verdt-det.html" },
   { title: "Kredittkortfordeler forklart", tint: "#e3dcc8" },
   { title: "Slik stabler du flere medlemsrabatter", tint: "#d6dfe7" },
 ];
