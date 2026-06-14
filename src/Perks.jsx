@@ -594,20 +594,26 @@ export default function Perks() {
         {/* Diskré inngang til kommende innhold – konkurrerer aldri med søket */}
         <section ref={guidesRef} id="guider" style={{ marginTop: 34, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.10)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-            <h2 style={{ fontFamily: serif, fontSize: 17, fontWeight: 600, margin: 0 }}>Guider</h2>
-            <span style={{ fontSize: 12, opacity: 0.45 }}>kommer snart</span>
+            <h2 style={{ fontFamily: serif, fontSize: 17, fontWeight: 600, margin: 0 }}>Guider og artikler</h2>
           </div>
           <div style={{ display: "grid", gap: 10 }}>
-            {GUIDES.map((g, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: 10, borderRadius: 12, background: surface, border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer" }}>
-                <div style={{ width: 56, height: 56, borderRadius: 9, flexShrink: 0, background: g.tint }} />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14.5, fontWeight: 600, lineHeight: 1.25 }}>{g.title}</div>
-                  <div style={{ fontSize: 11.5, opacity: 0.5, marginTop: 3 }}>Artikkel</div>
-                </div>
-                <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", color: ink, opacity: 0.38, whiteSpace: "nowrap" }}>Snart</span>
-              </div>
-            ))}
+            {GUIDES.map((g, i) => {
+              const live = !!g.url;
+              const card = { display: "flex", alignItems: "center", gap: 12, padding: 10, borderRadius: 12, background: surface, border: "1px solid rgba(0,0,0,0.08)", cursor: "pointer", textDecoration: "none", color: ink };
+              const body = (
+                <>
+                  <div style={{ width: 56, height: 56, borderRadius: 9, flexShrink: 0, background: g.tint }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 14.5, fontWeight: 600, lineHeight: 1.25 }}>{g.title}</div>
+                    <div style={{ fontSize: 11.5, opacity: 0.5, marginTop: 3 }}>Artikkel</div>
+                  </div>
+                  <span style={{ fontSize: 10, fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", color: live ? accent : ink, opacity: live ? 0.9 : 0.38, whiteSpace: "nowrap" }}>{live ? "Les →" : "Snart"}</span>
+                </>
+              );
+              return live
+                ? <a key={i} href={g.url} style={card}>{body}</a>
+                : <div key={i} style={card}>{body}</div>;
+            })}
           </div>
         </section>
         {/* Footer (skjema + info) ligger nå i public/footer.js – felles for hele nettstedet */}
