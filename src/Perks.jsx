@@ -462,6 +462,9 @@ export default function Perks() {
                 <div style={{ fontSize: 13, opacity: 0.78, marginTop: 7, lineHeight: 1.4 }}>
                   får du automatisk{valueEst.autoItems.length ? ` – ${valueEst.autoItems.map((i) => i.label.toLowerCase()).join(", ")}` : ""}. Pluss <strong style={{ color: pop }}>{valueEst.offerCount}</strong> rabattavtaler du kan bruke.
                 </div>
+                <div style={{ fontSize: 11, opacity: 0.5, marginTop: 8, lineHeight: 1.4 }}>
+                  Anslag – faktisk verdi avhenger av din situasjon og hvor mye du bruker fordelene.
+                </div>
               </>
             ) : (
               <>
@@ -528,12 +531,6 @@ export default function Perks() {
             </button>
           )}
         </div>
-
-        {!showAll && (
-          <div style={{ fontSize: 11, opacity: 0.5, marginBottom: 12, lineHeight: 1.4, maxWidth: 460 }}>
-            Anslag – faktisk verdi avhenger av din situasjon og hvor mye du bruker fordelene.
-          </div>
-        )}
 
         <div style={{ fontSize: 13, opacity: 0.6, marginBottom: 14 }}>
           {showAll ? `Viser alle medlemskap` : `Viser: ${selMemberships.map((m) => m.short).join(", ")}`}
