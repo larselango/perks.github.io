@@ -43,6 +43,9 @@
       ".pf-p strong{opacity:0.85}" +
       ".pf-link{margin:0 0 10px}" +
       ".pf-link a{color:" + ACCENT + ";text-decoration:none}" +
+      ".pf-nav{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 16px}" +
+      ".pf-nav-title{width:100%;font-family:" + SERIF + ";font-size:13px;font-weight:600;color:" + INK + ";opacity:0.85;margin:0 0 2px}" +
+      ".pf-nav a{color:" + ACCENT + ";text-decoration:none;font-weight:500}" +
       ".pf-fine{margin:0 0 4px;color:" + INK + ";opacity:0.5}";
     document.head.appendChild(style);
   }
@@ -57,6 +60,18 @@
         '<p class="pf-card-text">Vi jobber stadig med å holde oversikten oppdatert. Ser du likevel noe som er utdatert, feil, eller en fordel som mangler, setter vi stor pris på et hint.</p>' +
         '<textarea class="pf-textarea" rows="3" placeholder="Skriv her – f.eks. «Rabatten hos … ser ut til å ha endret seg»"></textarea>' +
         '<button class="pf-send" type="button">Send inn</button>' +
+      '</div>' +
+      '<div class="pf-nav">' +
+        '<span class="pf-nav-title">Populære medlemsfordeler</span>' +
+        '<a href="/lo-medlemsfordeler.html">LO</a>' +
+        '<a href="/obos-medlemsfordeler.html">OBOS</a>' +
+        '<a href="/naf-medlemsfordeler.html">NAF</a>' +
+        '<a href="/unio-medlemsfordeler.html">Unio</a>' +
+        '<a href="/coop-medlemsfordeler.html">Coop</a>' +
+        '<a href="/trumf-medlemsfordeler.html">Trumf</a>' +
+        '<a href="/dnt-medlemsfordeler.html">DNT</a>' +
+        '<a href="/er-lofavor-verdt-det.html">Guide: Er LO verdt det?</a>' +
+        '<a href="/">Alle medlemsfordeler</a>' +
       '</div>' +
       '<p class="pf-p"><strong>perks</strong> er en uavhengig oversikt over medlemsfordeler i Norge.</p>' +
       '<p class="pf-p">Vi bruker ingen sporings-cookies. Melder du deg på nyhetsbrevet, lagrer vi e-postadressen din – kun for å sende deg nyhetsbrevet, og du kan melde deg av når som helst.</p>' +

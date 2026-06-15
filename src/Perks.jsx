@@ -13,6 +13,7 @@ import { CATEGORIES, CAT_LABEL, CATALOG, ORG_RANK, POPULAR, AUTO_VALUE, GUIDES, 
 import { CAT_ICON, iconOf, iconByName } from "./icons.js";
 import { ink, paper, accent, surface, pop, fonts, googleFontsUrl } from "./theme.js";
 import { storage } from "./storage.js";
+import { FAQ } from "./faq.js";
 
 /* ---------- nøkler + avledet ---------- */
 const SEL_KEY = "perks:selected:v2";
@@ -173,6 +174,7 @@ export default function Perks() {
       .perk-card:hover{ transform: translateY(-1px); box-shadow: 0 6px 22px rgba(13,12,34,.10); border-color: rgba(215,110,152,.42); }
       .perk-featured{ transition: transform .13s ease, box-shadow .13s ease; }
       .perk-featured:hover{ transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,12,34,.13); }
+      summary::-webkit-details-marker{ display: none; }
     `;
     document.head.appendChild(s);
   }, []);
@@ -543,6 +545,18 @@ export default function Perks() {
                 : <div key={i} style={card}>{body}</div>;
             })}
           </div>
+        </section>
+
+        {/* Ofte stilte spørsmål – synlig FAQ som matcher FAQPage-strukturdataene
+            (begge bygges fra src/faq.js; JSON-LD injiseres i index.html ved bygging). */}
+        <section style={{ marginTop: 34, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.10)" }}>
+          <h2 style={{ fontFamily: serif, fontSize: 17, fontWeight: 600, margin: "0 0 6px" }}>Ofte stilte spørsmål</h2>
+          {FAQ.map((f, i) => (
+            <details key={i} style={{ borderBottom: "1px solid rgba(0,0,0,0.10)", padding: "4px 0" }}>
+              <summary style={{ fontFamily: serif, fontSize: 15.5, fontWeight: 600, cursor: "pointer", listStyle: "none", padding: "13px 2px", color: ink }}>{f.q}</summary>
+              <p style={{ fontSize: 14, opacity: 0.78, lineHeight: 1.5, margin: "0 0 14px", padding: "0 2px" }}>{f.a}</p>
+            </details>
+          ))}
         </section>
         {/* Footer (skjema + info) ligger nå i public/footer.js – felles for hele nettstedet */}
       </div>

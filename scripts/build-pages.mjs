@@ -15,6 +15,7 @@
 import { CATEGORIES, CAT_LABEL, CATALOG, POPULAR, AUTO_VALUE } from "../src/content.js";
 import { iconOf, CAT_ICON } from "../src/icons.js";
 import { PAGE_SEO } from "../src/seo-pages.js";
+import { FAQ } from "../src/faq.js";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
@@ -104,7 +105,7 @@ function buildPage(org) {
   };
 
   return { slug, url, html: `<!doctype html>
-<html lang="no">
+<html lang="nb">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -180,8 +181,19 @@ writeFileSync("dist/sitemap.xml",
 const indexPath = "dist/index.html";
 if (existsSync(indexPath)) {
   const links = built.map((b) => `<a href="/${b.slug}.html" style="color:#d76e98;font-weight:600;text-decoration:none">${esc(b.org.short)}</a>`).join(", ");
+  // FAQPage-strukturdata fra samme kilde som den synlige FAQ-en (src/faq.js).
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({
+      "@type": "Question", name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  const faqScript = `<script type="application/ld+json">${JSON.stringify(faqLd)}</script>`;
   let html = readFileSync(indexPath, "utf8");
-  html = html.replace("<!--PERKS_MEMBERSHIP_LINKS-->", links);
+  html = html.replace("<!--PERKS_MEMBERSHIP_LINKS-->", links)
+             .replace("<!--PERKS_FAQ_JSONLD-->", faqScript);
   writeFileSync(indexPath, html);
 }
 
