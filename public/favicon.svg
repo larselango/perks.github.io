@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#0d0c22"/>
-  <text x="14" y="45" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="700" fill="#ffffff">p</text>
-  <circle cx="44" cy="40" r="6" fill="#d76e98"/>
+  <rect width="64" height="64" rx="14" fill="#d76e98"/>
+  <g transform="translate(32.0 32.0) scale(0.024716 -0.024716) translate(-1000.00 -358.50)">
+    <path d="M132 -390V1080H465V867L462 882Q523 1001 612.5 1054.0Q702 1107 819 1107Q957 1107 1056.5 1040.0Q1156 973 1209.0 845.5Q1262 718 1262 537Q1262 358 1208.5 231.5Q1155 105 1054.0 39.0Q953 -27 812 -27Q687 -27 598.0 29.5Q509 86 449 210H482V-390ZM682 233Q780 233 836.5 316.5Q893 400 893 545Q893 688 838.0 768.0Q783 848 684 848Q621 848 571.5 813.5Q522 779 493.5 711.0Q465 643 465 541Q465 390 527.0 311.5Q589 233 682 233Z" fill="#ffffff"/>
+    <path d="M322 -27Q218 -27 156.0 35.0Q94 97 94 200Q94 304 156.0 366.0Q218 428 322 428Q425 428 487.0 366.0Q549 304 549 200Q549 97 487.0 35.0Q425 -27 322 -27Z" transform="translate(1319 0)" fill="#ffffff"/>
+  </g>
 </svg>
