@@ -410,8 +410,8 @@ export default function Perks() {
         ) : (
           <div style={{ marginBottom: 16 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: accent, marginBottom: 8 }}>Få oversikt</div>
-            <h1 style={{ fontSize: 25, fontFamily: serif, fontWeight: 600, lineHeight: 1.1, margin: 0, letterSpacing: -0.3, maxWidth: 480 }}>Se fordelene du allerede har</h1>
-            <p style={{ fontSize: 14, opacity: 0.72, margin: "10px 0 0", maxWidth: 440, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og viser {"hvor du faktisk får rabatt."}</p>
+            <h1 style={{ fontSize: 25, fontFamily: serif, fontWeight: 600, lineHeight: 1.1, margin: 0, letterSpacing: -0.3, maxWidth: 480 }}>Se fordelene du <span style={{ whiteSpace: "nowrap" }}>allerede har</span></h1>
+            <p style={{ fontSize: 14, opacity: 0.72, margin: "10px 0 0", maxWidth: 440, lineHeight: 1.45 }}>Velg medlemskapene dine, så anslår vi verdien og <span style={{ whiteSpace: "nowrap" }}>viser hvor</span> du faktisk får rabatt.</p>
           </div>
         )}
 
